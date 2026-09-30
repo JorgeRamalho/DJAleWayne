@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Ale Wayne">
+  <rect width="64" height="64" fill="#0a0a0a"/>
+  <path fill="#f4f1ea" d="M8 56 L32 8 L38 8 L14 56 Z"/>
+  <path fill="#e10600" d="M26 56 L50 8 L56 8 L32 56 Z" opacity=".92"/>
+</svg>
