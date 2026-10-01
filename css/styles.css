@@ -254,8 +254,11 @@
 
   .nav {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1.6rem;
+    justify-content: flex-end;
+    gap: 0.65rem 1.15rem;
+    max-width: min(100%, 42rem);
   }
 
   .nav a {
@@ -396,7 +399,7 @@
     gap: 2.5rem;
     width: max-content;
     padding: 0.85rem 0;
-    animation: ticker 28s linear infinite;
+    animation: ticker 95s linear infinite;
     font-family: var(--font-display);
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -853,7 +856,7 @@
   }
 
   .music-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 
   .release {
@@ -880,6 +883,17 @@
 
   .release p {
     font-size: 0.85rem;
+  }
+
+  .release-link {
+    color: inherit;
+    text-decoration: none;
+    border-radius: 1rem;
+    outline-offset: 4px;
+  }
+
+  .release-link:focus-visible {
+    outline: 2px solid var(--gold);
   }
 
   .sets-grid {
@@ -1158,6 +1172,12 @@
     padding-top: 1rem;
   }
 
+  .legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
   .policy {
     display: grid;
     gap: 1.1rem;
@@ -1194,6 +1214,137 @@
     gap: 0.4rem;
     padding-left: 1rem;
     list-style: disc;
+  }
+
+  .legal-doc {
+    max-width: 46rem;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .legal-block {
+    display: grid;
+    gap: 0.65rem;
+    padding: 1.15rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.02);
+  }
+
+  .legal-block h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .legal-block ul {
+    display: grid;
+    gap: 0.35rem;
+    padding-left: 1.1rem;
+    list-style: disc;
+    color: color-mix(in srgb, var(--paper) 82%, var(--mist));
+  }
+
+  .legal-block p {
+    color: color-mix(in srgb, var(--paper) 82%, var(--mist));
+  }
+
+  .cookie-banner {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 90;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+    background: color-mix(in srgb, var(--asphalt) 92%, black);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 -12px 40px rgb(0 0 0 / 0.45);
+  }
+
+  .cookie-banner[hidden] {
+    display: none;
+  }
+
+  .cookie-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .cookie-banner-inner p {
+    flex: 1 1 16rem;
+    font-size: 0.9rem;
+    color: color-mix(in srgb, var(--paper) 88%, var(--mist));
+    margin: 0;
+  }
+
+  .cookie-banner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .cookie-banner .btn {
+    min-height: 2.5rem;
+    padding-inline: 1rem;
+    font-size: 0.82rem;
+  }
+
+  .float-action {
+    position: fixed;
+    z-index: 45;
+    bottom: 1.35rem;
+    display: grid;
+    place-items: center;
+    width: 3.15rem;
+    height: 3.15rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 0.45);
+    transition:
+      transform 0.25s var(--ease),
+      opacity 0.25s var(--ease),
+      visibility 0.25s var(--ease),
+      bottom 0.25s var(--ease);
+  }
+
+  .float-action:hover {
+    transform: translateY(-3px);
+  }
+
+  .float-action svg {
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: currentColor;
+  }
+
+  .float-action--top {
+    left: 1.25rem;
+    background: color-mix(in srgb, var(--asphalt) 88%, var(--ink));
+    color: var(--paper);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .float-action--top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .float-action--whatsapp {
+    right: 1.25rem;
+    background: linear-gradient(180deg, #25d366, #128c7e);
+    color: var(--white);
+    border-color: color-mix(in srgb, #25d366 50%, transparent);
+  }
+
+  body:has(.cookie-banner:not([hidden])) .float-action {
+    bottom: 6.25rem;
   }
 
   .matrix {
@@ -1242,6 +1393,12 @@
   }
 }
 
+@media (max-width: 1180px) {
+  .music-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 980px) {
   .hero-grid,
   .about-grid,
@@ -1284,6 +1441,8 @@
     display: none;
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
+    max-width: none;
     gap: 0;
     padding: 1rem 1.25rem 1.4rem;
     background: color-mix(in srgb, var(--ink) 96%, transparent);
@@ -1334,7 +1493,9 @@
   .hero-actions,
   .btn,
   .modal,
-  .toast {
+  .toast,
+  .float-action,
+  .cookie-banner {
     display: none !important;
   }
 

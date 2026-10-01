@@ -19,6 +19,39 @@
     year.textContent = String(new Date().getFullYear());
   }
 
+  const COOKIE_CONSENT_KEY = "aw-cookie-consent";
+  const cookieBanner = $("[data-cookie-banner]");
+  const cookieAccept = $("[data-cookie-accept]");
+  const cookieReject = $("[data-cookie-reject]");
+
+  const hideCookieBanner = () => {
+    cookieBanner?.setAttribute("hidden", "");
+  };
+
+  const saveCookieChoice = (value) => {
+    try {
+      localStorage.setItem(COOKIE_CONSENT_KEY, value);
+    } catch {
+      /* storage blocked */
+    }
+    hideCookieBanner();
+  };
+
+  if (cookieBanner) {
+    let hasConsent = false;
+    try {
+      hasConsent = Boolean(localStorage.getItem(COOKIE_CONSENT_KEY));
+    } catch {
+      hasConsent = false;
+    }
+    if (!hasConsent) {
+      cookieBanner.removeAttribute("hidden");
+    }
+  }
+
+  cookieAccept?.addEventListener("click", () => saveCookieChoice("all"));
+  cookieReject?.addEventListener("click", () => saveCookieChoice("essential"));
+
   window.addEventListener("load", () => {
     preloader?.classList.add("is-done");
   });
@@ -27,11 +60,18 @@
     window.setTimeout(() => preloader.classList.add("is-done"), 1800);
   }
 
+  const backTop = $("[data-back-top]");
+
   const onScroll = () => {
     header?.classList.toggle("is-scrolled", window.scrollY > 12);
+    backTop?.classList.toggle("is-visible", window.scrollY > 360);
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
+
+  backTop?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
   const closeNav = () => {
     nav?.classList.remove("is-open");
