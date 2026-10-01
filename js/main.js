@@ -277,6 +277,11 @@
   };
 
   const emailOk = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  const phoneDigits = (value) => value.replace(/\D/g, "");
+  const phoneOk = (value) => {
+    const digits = phoneDigits(value);
+    return digits.length >= 10 && digits.length <= 11;
+  };
 
   const setError = (input, message) => {
     const field = input.closest(".field");
@@ -292,12 +297,12 @@
     const data = new FormData(form);
     const nome = String(data.get("nome") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
-    const tipo = String(data.get("tipo") ?? "").trim();
+    const telefone = String(data.get("telefone") ?? "").trim();
     const quando = String(data.get("quando") ?? "").trim();
 
     const nomeInput = form.elements.namedItem("nome");
     const emailInput = form.elements.namedItem("email");
-    const tipoInput = form.elements.namedItem("tipo");
+    const telefoneInput = form.elements.namedItem("telefone");
 
     let valid = true;
     if (nomeInput instanceof HTMLInputElement) {
@@ -310,12 +315,11 @@
       setError(emailInput, error);
       valid = valid && !error;
     }
-    if (tipoInput instanceof HTMLSelectElement) {
-      const error = tipo ? "" : "Escolha o tipo de proposta.";
-      setError(tipoInput, error);
+    if (telefoneInput instanceof HTMLInputElement) {
+      const error = phoneOk(telefone) ? "" : "Informe um telefone válido (com DDD).";
+      setError(telefoneInput, error);
       valid = valid && !error;
     }
-
     if (!valid) {
       showToast("Revise os campos destacados.");
       return;
@@ -325,7 +329,7 @@
       `Booking Ale Wayne`,
       `Nome: ${nome}`,
       `E-mail: ${email}`,
-      `Tipo: ${tipo}`,
+      `Telefone: ${telefone}`,
       quando ? `Quando/onde: ${quando}` : "",
     ]
       .filter(Boolean)
